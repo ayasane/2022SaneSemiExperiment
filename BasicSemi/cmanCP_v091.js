@@ -32,7 +32,7 @@
 var cmanCP_VAR = {};
 
 // =========================================================================================
-//	カラーパレットの作成	
+//	カラーパレットの作成
 // =========================================================================================
 function cmanCP_JS_open(argThis){
 
@@ -245,7 +245,7 @@ function cmanCP_JS_open(argThis){
 				'<tr><td class="cmanCP_CSS_sbg0"></td><td class="cmanCP_CSS_sbg1"></td><td class="cmanCP_CSS_sbg0"></td><td class="cmanCP_CSS_sbg1"></td><td class="cmanCP_CSS_sbg0"></td></tr>' +
 				'<tr><td class="cmanCP_CSS_sbg1"></td><td class="cmanCP_CSS_sbg0"></td><td class="cmanCP_CSS_sbg1"></td><td class="cmanCP_CSS_sbg0"></td><td class="cmanCP_CSS_sbg1"></td></tr>' +
 				'</table>' +
-				'<div style="position: absolute; top:0px; left:0px;width: 90px;height: 52px;border: 2px solid #ccc;margin: 0 auto 0 auto;" id="cmanCP_ID_sample">' + 
+				'<div style="position: absolute; top:0px; left:0px;width: 90px;height: 52px;border: 2px solid #ccc;margin: 0 auto 0 auto;" id="cmanCP_ID_sample">' +
 				'</div>' +
 				'</div>' +
 				'</div>' +
@@ -443,7 +443,7 @@ function cmanCP_JS_open(argThis){
 				cmanCP_VAR["obj_tB16"].value	= wDefColor.substr(5,2).toString();
 				wDefColorSet = 'RGB16';
 				break;
-			}	
+			}
 		}
 	}
 	else if	(wDefColor.indexOf('rgb(') == 0){
@@ -456,7 +456,7 @@ function cmanCP_JS_open(argThis){
 			cmanCP_VAR["obj_tB"].value	= wSplit[2];
 			wDefColorSet = 'RGB';
 		}
-		
+
 	}
 	else if	(wDefColor.indexOf('rgba(') == 0){
 		wDefColor = wDefColor.replace('rgba(','');
@@ -469,7 +469,7 @@ function cmanCP_JS_open(argThis){
 			cmanCP_VAR["obj_tA"].value	= wSplit[3];
 			wDefColorSet = 'RGB';
 		}
-		
+
 	}
 	else if	(wDefColor.indexOf('hsl(') == 0){
 		wDefColor = wDefColor.replace('hsl(','');
@@ -482,7 +482,7 @@ function cmanCP_JS_open(argThis){
 			cmanCP_VAR["obj_tL"].value	= parseFloat(wSplit[2])/100;
 			wDefColorSet = 'HSL';
 		}
-		
+
 	}
 	else if	(wDefColor.indexOf('hsla(') == 0){
 		wDefColor = wDefColor.replace('hsla(','');
@@ -542,17 +542,17 @@ function cmanCP_JS_open(argThis){
 
 
 	// ----- 表示位置設定 ---------------------------------------------
-	if(cmanCP_VAR["objPop"].scrollWidth >= document.documentElement.clientWidth){
-		cmanCP_VAR["objPop"].style.left	= '0px';
-	}else{
-		cmanCP_VAR["objPop"].style.left	= Math.round((document.documentElement.clientWidth - cmanCP_VAR["objPop"].scrollWidth) / 2) + 'px';
-	}
-
-	if(cmanCP_VAR["objPop"].scrollHeight >= document.documentElement.clientHeight){
-		cmanCP_VAR["objPop"].style.top	= '0px';
-	}else{
-		cmanCP_VAR["objPop"].style.top	= Math.round((document.documentElement.clientHeight - cmanCP_VAR["objPop"].scrollHeight) / 2) + 'px';
-	}
+	// if(cmanCP_VAR["objPop"].scrollWidth >= document.documentElement.clientWidth){
+	// 	cmanCP_VAR["objPop"].style.left	= '0px';
+	// }else{
+	// 	cmanCP_VAR["objPop"].style.left	= Math.round((document.documentElement.clientWidth - cmanCP_VAR["objPop"].scrollWidth) / 2) + 'px';
+	// }
+	//
+	// if(cmanCP_VAR["objPop"].scrollHeight >= document.documentElement.clientHeight){
+	// 	cmanCP_VAR["objPop"].style.top	= '0px';
+	// }else{
+	// 	cmanCP_VAR["objPop"].style.top	= Math.round((document.documentElement.clientHeight - cmanCP_VAR["objPop"].scrollHeight) / 2) + 'px';
+	// }
 
 	// ----- 移動イベント登録 -----------------------------------------
 	document.getElementById('cmanCP_ID_title').onmousedown	= cmanCP_JS_mdown;
@@ -701,7 +701,7 @@ function cmanCP_JS_tanCng(argID){
 }
 
 // =========================================================================================
-//	レンジが変更された場合	
+//	レンジが変更された場合
 // =========================================================================================
 function cmanCP_JS_rangeCng(argID){
 
@@ -730,7 +730,7 @@ function cmanCP_JS_rangeCng(argID){
 }
 
 // =========================================================================================
-//	テキスト入力が変更された場合	
+//	テキスト入力が変更された場合
 // =========================================================================================
 function cmanCP_JS_textCng(argID){
 
@@ -760,7 +760,7 @@ function cmanCP_JS_textCng(argID){
 
 
 // =========================================================================================
-//	RGB16→RGB 設定	
+//	RGB16→RGB 設定
 // =========================================================================================
 function cmanCP_JS_rgb16_TO_rgb(){
 
@@ -777,7 +777,7 @@ function cmanCP_JS_rgb16_TO_rgb(){
 
 
 // =========================================================================================
-//	RGB→RGB16 設定	
+//	RGB→RGB16 設定
 // =========================================================================================
 function cmanCP_JS_rgb_TO_rgb16(){
 
@@ -938,17 +938,17 @@ function cmanCP_JS_hsl_TO_rgb(){
 
 
 // =========================================================================================
-//	Aはチェック＆正規化 設定	
+//	Aはチェック＆正規化 設定
 // =========================================================================================
 function cmanCP_JS_chk_a(){
 
 	var wCal = cmanCP_JS_chk0to1s2(cmanCP_VAR["obj_tA"].value);
 	if(wCal.toString() != cmanCP_VAR["obj_tA"].value.toString()){cmanCP_VAR["obj_tA"].value = wCal;}	// number対応
-	
+
 }
 
 // =========================================================================================
-//	16進数チェック＆正規化（0～ff）	
+//	16進数チェック＆正規化（0～ff）
 // =========================================================================================
 function cmanCP_JS_chk00toFF(arg16){
 
@@ -965,14 +965,14 @@ function cmanCP_JS_chk00toFF(arg16){
 
 		wRc = parseInt(wRc).toString(16);
 		if(wRc.length == 1){wRc = '0'+wRc;}
-	
+
 	}
 
 	return wRc;
 }
 
 // =========================================================================================
-//	10進数チェック＆正規化（0～255）	
+//	10進数チェック＆正規化（0～255）
 // =========================================================================================
 function cmanCP_JS_chk0to255(arg10){
 
@@ -988,7 +988,7 @@ function cmanCP_JS_chk0to255(arg10){
 }
 
 // =========================================================================================
-//	10進数チェック＆正規化（0～359）	
+//	10進数チェック＆正規化（0～359）
 // =========================================================================================
 function cmanCP_JS_chk0to359(arg10){
 
@@ -1004,7 +1004,7 @@ function cmanCP_JS_chk0to359(arg10){
 }
 
 // =========================================================================================
-//	10進数チェック（0～1,0.1刻み）	
+//	10進数チェック（0～1,0.1刻み）
 // =========================================================================================
 function cmanCP_JS_chk0to100s1(arg10){
 
@@ -1030,7 +1030,7 @@ function cmanCP_JS_chk0to100s1(arg10){
 }
 
 // =========================================================================================
-//	10進数チェック（0～1,0.01刻み）	
+//	10進数チェック（0～1,0.01刻み）
 // =========================================================================================
 function cmanCP_JS_chk0to1s2(arg10){
 
@@ -1064,7 +1064,7 @@ function cmanCP_JS_chk0to1s2(arg10){
 }
 
 // =========================================================================================
-//	10進数チェック（0～1,0.001刻み）	
+//	10進数チェック（0～1,0.001刻み）
 // =========================================================================================
 function cmanCP_JS_chk0to1s3(arg10){
 
@@ -1122,7 +1122,7 @@ function cmanCP_JS_zen_TO_han(argStr){
 }
 
 // =========================================================================================
-//	サンプル更新	
+//	サンプル更新
 // =========================================================================================
 function cmanCP_JS_sampleCng(){
 
@@ -1157,7 +1157,7 @@ function cmanCP_JS_sampleCng(){
 }
 
 // =========================================================================================
-//	この色を選択	
+//	この色を選択
 // =========================================================================================
 function cmanCP_JS_select(){
 
@@ -1257,7 +1257,7 @@ function cmanCP_JS_select(){
 
 
 // =========================================================================================
-//	カラーパレット移動イベント	
+//	カラーパレット移動イベント
 // =========================================================================================
 function cmanCP_JS_mdown(argEvent){
 
@@ -1285,5 +1285,5 @@ function cmanCP_JS_mmove(argEvent){
 	cmanCP_VAR["objPop"].style.left = cmanCP_VAR['sLeft'] - ( cmanCP_VAR['sPosX'] - argEvent.clientX) + 'px';
 
 	return false;
-	
+
 }
