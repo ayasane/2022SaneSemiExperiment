@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="jspsych/dist/jspsych.js"></script>
+    <script src="jspsych/dist/plugin-survey-html-form.js"></script>
+    <script src="cmanCP_v091.js"></script>
+    <link rel="stylesheet" href="jspsych/dist/jspsych.css"></script>
+  </head>
+  <body></body>
+  <script type="text/javascript">
+
+    var jsPsych = initJsPsych({
+      on_finish: function() {
+        jsPsych.data.displayData();
+      }
+    });
+
+    var form_trial = {
+      type: jsPsychSurveyHtmlForm,
+      preamble: '<p> あ </p>',
+      html:'<input name="color" size="10" type="text" value="#0000ff" id="selectcolor">'+
+      '<br><input type="button" value="色を選択する" '+
+      'onclick="cmanCP_JS_open(this)"cmanCPat="def_color:val=sample1,'+
+      'def_alpha:0,rc_text:selectcolor,rc_form:RGB"><br>'
+    };
+
+    jsPsych.run([form_trial]);
+
+  </script>
+</html>

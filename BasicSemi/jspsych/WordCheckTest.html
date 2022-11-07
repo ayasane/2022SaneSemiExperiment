@@ -1,0 +1,246 @@
+<html>
+<head>
+<meta http-equiv="Content-Type"  content="text/html; charset=UTF-8">
+<script src="jspsych/dist/jspsych.js"></script>
+<script src="jspsych/dist/plugin-survey-text.js"></script>
+<script src="jspsych/dist/plugin-html-keyboard-response.js"></script>
+<script src="jspsych/dist/plugin-audio-button-response.js"></script>
+<script src="jspsych/dist/plugin-audio-button-response.js"></script>
+<script src="jspsych/dist/plugin-html-button-response.js"></script>
+<script src="jspsych/dist/plugin-fullscreen.js"></script>
+<script src="jspsych/dist/plugin-instructions.js"></script>
+<script src="jspsych/dist/plugin-preload.js"></script>
+<script src="https://unpkg.com/dropbox@4.0.3/dist/Dropbox-sdk.min.js"></script>
+<link rel="stylesheet" href="jspsych/dist/jspsych.css"></link>
+<style>
+html{touch-action: manipulation;}
+/* body {
+  background-color: rgb(217,217,217);
+} */
+</style>
+</head>
+
+<body></body>
+<script>
+
+/* variables*/
+var StimulusFileName=[];
+var trialimage=[];
+var trial=[];
+var rest = [];
+var timeline=[];
+
+/* 実行 */
+var jsPsych = initJsPsych({
+  on_finish: function() {
+    jsPsych.data.addProperties({participantCode: subjectID});
+    jsPsych.data.displayData();
+    month=new Date().getMonth()+1;
+    //var save_filename='OnlineTestWordCheck_'+subjectID+'_22_'+month+'_'+new Date().getDate()+'_'+new Date().getHours()+"_"+new Date().getMinutes()+'.csv';
+    save_data_json();
+    save_data_csv();
+    //document.body.innerHTML = '<p> この課題は終了です。</p>'
+    //jsPsych.data.get().localSave('csv',save_filename);
+    //setTimeout(function () { location.href = "OnlineTestTop.html" }, 1000)
+  }
+});
+
+/* Dropboxに保存する設定 */
+var dropbox_access_token ="wMQbuTyzTtQAAAAAAAEzNd-ra88JtRA7FDUvhrSz9ZWfpsbrB3aeOVhImPDbskJ5";
+    var now=new Date();
+    function save_data_json() {
+      var save_filename = '/TeikyoOnlineCognitiveTest/WordCheck'+subjectID+now;
+            var dbx = new Dropbox.Dropbox({
+                accessToken: dropbox_access_token
+            });
+            dbx.filesUpload({
+                    path: save_filename + '.json',
+                    mode: 'overwrite',
+                    mute: true,
+                    contents: jsPsych.data.get().json()
+                })
+    }
+
+    function save_data_csv() {
+      var save_filename = '/TeikyoOnlineCognitiveTest/WordCheck'+subjectID+now;
+            var dbx = new Dropbox.Dropbox({
+                accessToken: dropbox_access_token
+            });
+            dbx.filesUpload({
+                    path: save_filename + '.csv',
+                    mode: 'overwrite',
+                    mute: true,
+                    contents: jsPsych.data.get().csv()
+                })
+    }
+
+
+/*input ID*/
+var IDn = {
+type: jsPsychSurveyText,
+questions: [
+  {prompt: '語彙検査です。参加者IDを入力してください', columns: 50, name: 'ID'}
+],
+on_finish: function(data){
+      subjectID = data.response.ID;
+    }
+}
+
+var fullscreen = {
+  type: jsPsychFullscreen,
+  fullscreen_mode: true,
+  message: '',
+  button_label: "<div><p style = 'font-size: 32px;'>ボタンを押すと始まります。</p></div>"
+};
+
+var Endfullscreen = {
+  type: jsPsychFullscreen,
+  fullscreen_mode: false,
+  trial_duration: 100,
+};
+
+/*教示*/
+var inst = {
+  type: jsPsychAudioButtonResponse,
+    stimulus:'sound/WordCheck_InstructionSound1.mp3',
+    prompt:'<img style="width:80vmin" src=WordCheck_Instruction.jpg>',
+    choices: ['はじめる']
+}
+
+
+var practice = {
+  type: jsPsychAudioButtonResponse,
+    stimulus:'sound/WordCheck_InstructionSoundPractice.mp3',
+    prompt:
+    "<p>練習を始めます。</p>",
+    choices: ['練習をはじめる']
+}
+
+
+
+var start = {
+    type: jsPsychAudioButtonResponse,
+    stimulus:'sound/WordCheck_InstructionSoundTrial.mp3',
+    prompt:
+    "<p>本番を始めます。</p>",
+    choices: ['本番をはじめる']
+}
+
+
+var order=[];
+for(var i=0; i<68; i=i+4){
+        var array=[i+1,i+2,i+3,i+4];
+        var sarray=[i+1,i+2,i+3,i+4];
+        var soundarray_rand = jsPsych.randomization.repeat(sarray, 1);
+        order[i] = {
+          imagefile1:'<img style="width:30vw" src=imageW/'+array[0]+'.jpg>',
+          imagefile2:'<img style="width:30vw" src=imageW/'+array[1]+'.jpg>',
+          imagefile3:'<img style="width:30vw" src=imageW/'+array[2]+'.jpg>',
+          imagefile4:'<img style="width:30vw" src=imageW/'+array[3]+'.jpg>',
+          soundfile:'sound/'+soundarray_rand[0]+'.mp3',
+          fixationDuration:1000,
+          imageDuration:2000}
+        order[i+1] = {
+          imagefile1:'<img style="width:30vw" src=imageW/'+array[0]+'.jpg>',
+          imagefile2:'<img style="width:30vw" src=imageW/'+array[1]+'.jpg>',
+          imagefile3:'<img style="width:30vw" src=imageW/'+array[2]+'.jpg>',
+          imagefile4:'<img style="width:30vw" src=imageW/'+array[3]+'.jpg>',
+          soundfile:'sound/'+soundarray_rand[1]+'.mp3',
+          fixationDuration:0,
+          imageDuration:0}
+        order[i+2] = {
+          imagefile1:'<img style="width:30vw" src=imageW/'+array[0]+'.jpg>',
+          imagefile2:'<img style="width:30vw" src=imageW/'+array[1]+'.jpg>',
+          imagefile3:'<img style="width:30vw" src=imageW/'+array[2]+'.jpg>',
+          imagefile4:'<img style="width:30vw" src=imageW/'+array[3]+'.jpg>',
+          soundfile:'sound/'+soundarray_rand[2]+'.mp3',
+          fixationDuration:0,
+          imageDuration:0}
+        order[i+3] = {
+          imagefile1:'<img style="width:30vw" src=imageW/'+array[0]+'.jpg>',
+          imagefile2:'<img style="width:30vw" src=imageW/'+array[1]+'.jpg>',
+          imagefile3:'<img style="width:30vw" src=imageW/'+array[2]+'.jpg>',
+          imagefile4:'<img style="width:30vw" src=imageW/'+array[3]+'.jpg>',
+          soundfile:'sound/'+soundarray_rand[3]+'.mp3',
+          fixationDuration:0,
+          imageDuration:0}
+    }
+    var loadtmp=[]; var loadtmpaudio=[];
+
+    for(var i=0; i<68; i++){
+      nm=i+1;
+      loadtmp[i]='imageW/'+nm+'.jpg>';
+      loadtmpaudio[i]='sound/'+nm+'.mp3';
+    };
+    loadtmp[68]='imageW/P1.jpg';loadtmp[69]='imageW/P2.jpg';loadtmp[70]='imageW/P3.jpg';loadtmp[71]='imageW/P4.jpg';
+    loadtmpaudio[68]='sound/P1.jpg';loadtmpaudio[69]='sound/P2.jpg';
+    loadtmpaudio[70]='sound/P3.jpg';loadtmpaudio[71]='sound/P4.jpg';
+
+    var preload={
+      type: jsPsychPreload,
+      images:loadtmp,
+      audio:loadtmpaudio,
+      auto_preload: true
+    };
+
+    var Porder=[];
+    Porder[0]={imagefile1:'<img style="width:30vw" src=imageW/P1.jpg>',imagefile2:'<img style="width:30vw" src=imageW/P2.jpg>',imagefile3:'<img style="width:30vw" src=imageW/P3.jpg>',imagefile4:'<img style="width:30vw" src=imageW/P4.jpg>',soundfile:'sound/P1.mp3',fixationDuration:1000,imageDuration:2000};
+    Porder[1]={imagefile1:'<img style="width:30vw" src=imageW/P1.jpg>',imagefile2:'<img style="width:30vw" src=imageW/P2.jpg>',imagefile3:'<img style="width:30vw" src=imageW/P3.jpg>',imagefile4:'<img style="width:30vw" src=imageW/P4.jpg>',soundfile:'sound/P2.mp3',fixationDuration:0,imageDuration:0};
+    Porder[2]={imagefile1:'<img style="width:30vw" src=imageW/P1.jpg>',imagefile2:'<img style="width:30vw" src=imageW/P2.jpg>',imagefile3:'<img style="width:30vw" src=imageW/P3.jpg>',imagefile4:'<img style="width:30vw" src=imageW/P4.jpg>',soundfile:'sound/P3.mp3',fixationDuration:0,imageDuration:0};
+    Porder[3]={imagefile1:'<img style="width:30vw" src=imageW/P1.jpg>',imagefile2:'<img style="width:30vw" src=imageW/P2.jpg>',imagefile3:'<img style="width:30vw" src=imageW/P3.jpg>',imagefile4:'<img style="width:30vw" src=imageW/P4.jpg>',soundfile:'sound/P4.mp3',fixationDuration:0,imageDuration:0};
+
+
+/* 注視点 */
+var fixation = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: '<div style="font-size:60px;">+</div>',
+      choices: "NO_KEYS",
+      trial_duration: jsPsych.timelineVariable('fixationDuration')
+}
+
+var check = {
+  type: jsPsychHtmlButtonResponse,
+  stimulus: '音が出ます。',
+  choices: ['Continue']
+};
+
+var imagedisp={
+  type: jsPsychHtmlButtonResponse,
+  stimulus: "",
+  choices: [jsPsych.timelineVariable('imagefile1'),jsPsych.timelineVariable('imagefile2'),jsPsych.timelineVariable('imagefile3'),jsPsych.timelineVariable('imagefile4')],
+  trial_duration: jsPsych.timelineVariable('imageDuration'),
+  //response_ends_trial:false
+}
+
+  var trial = {
+    type: jsPsychAudioButtonResponse,
+    stimulus: jsPsych.timelineVariable('soundfile'),
+    choices:[jsPsych.timelineVariable('imagefile1'),jsPsych.timelineVariable('imagefile2'),jsPsych.timelineVariable('imagefile3'),jsPsych.timelineVariable('imagefile4')],
+    data: {
+          LeftUpper: jsPsych.timelineVariable('imagefile1'),
+          RightUpper: jsPsych.timelineVariable('imagefile2'),
+          LeftLower: jsPsych.timelineVariable('imagefile3'),
+          RightLower: jsPsych.timelineVariable('imagefile4'),
+          Sound:jsPsych.timelineVariable('soundfile')
+    },
+    response_ends_trial: true
+  }
+
+  /* 刺激提示・反応 */
+  var practice_procedure = {
+    timeline: [fixation,imagedisp,trial],
+    timeline_variables: Porder
+  }
+
+  var test_procedure = {
+    timeline: [fixation,imagedisp,trial],
+    timeline_variables: order
+  }
+
+  timeline.push(IDn,inst,practice,practice_procedure);
+  timeline.push(start,test_procedure);
+
+jsPsych.run(timeline);
+
+</script>
+</html>
